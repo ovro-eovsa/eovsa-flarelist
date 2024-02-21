@@ -32,4 +32,4 @@ This website is inspired by the [STIX Data Center](https://datacenter.stix.i4ds.
 We welcome contributions to the EOVSA Flarelist Website project. If you're interested in contributing, please fork the repository and submit your pull requests for review.
 
 ## License
-
+MIT license
