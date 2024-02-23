@@ -25,7 +25,11 @@ var isOvsa = {{ 'true' if hostname == 'ovsa' else 'false' }};
 
 <!-- content goes into main container -->
 <!-- Bootstrap 4 is supported -->
-<h2>Query EOVSA solar flare list</h2>
+<!-- <h2>Query EOVSA solar flare list</h2> -->
+<div class="d-flex align-items-center">
+  <img src="{{ url_for('static', filename='images/eovsa_logo.svg') }}" alt="Your Image Description" width="50" height="50" class="mr-2">
+  <h2>Query EOVSA solar flare list</h2>
+</div>
 <form class="form-inline mt-2">
   <div class="form-group mb-2">
     <label for="start">Time range:</label>
@@ -45,12 +49,13 @@ var isOvsa = {{ 'true' if hostname == 'ovsa' else 'false' }};
                    <th>Entry ID</th>
                    <th>Flare ID</th>
                    <th title="Start UTC">Start UTC</th>
+                   <th title="Peak UTC">Peak UTC</th>
                    <th title="End UTC">End UTC</th>
                    <th>GOES Class</th>
-                   <th>Link DSPEC</th>
-                   <th>Link DSPEC Data</th>
-                   <th>Link Movie</th>
-                   <th>Link FITS</th>
+                   <th>Spectrum Plot</th>
+                   <th>Spectrum Data</th>
+                   <th>Image Movie</th>
+                   <th>Image Fits</th>
                </tr>
            </thead>
            <tbody>
