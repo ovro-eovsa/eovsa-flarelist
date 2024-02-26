@@ -10,6 +10,15 @@ import os
 import mysql.connector
 from astropy.time import Time
 
+import requests
+def check_url_exists(url):
+    try:
+        response = requests.head(url, allow_redirects=True, timeout=5)
+        return response.status_code == 200
+    except requests.RequestException:
+        return False
+
+
 example = Blueprint('example', __name__, template_folder='templates')
 
 def get_eo_flare_list_MySQL(start_utc, end_utc):
@@ -80,10 +89,13 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
 
             link_movie = None  # Default to None
             link_fits = None
-            if EO_xcen[j][0]:  # If link_movie_str is non-empty or meets your criteria
+            # if EO_xcen[j][0]:  # If link_movie_str is non-empty or meets your criteria
+            #     link_movie = f'<a href="{link_movie_str}"><img src="{ql_symbol_url}" alt="QL_Movie" style="width:20px;height:20px;"></a>'
+            #     link_fits = '<a href="'+link_fits_str+'"><img src="'+dl_symbol_url+'" alt="FITS" style="width:20px;height:20px;"></a>'
+
+            if check_url_exists(link_movie_str):
                 link_movie = f'<a href="{link_movie_str}"><img src="{ql_symbol_url}" alt="QL_Movie" style="width:20px;height:20px;"></a>'
                 link_fits = '<a href="'+link_fits_str+'"><img src="'+dl_symbol_url+'" alt="FITS" style="width:20px;height:20px;"></a>'
-
 
             result.append({'_id': i+1,
                 'flare_id': int(flare_id[j][0]),
