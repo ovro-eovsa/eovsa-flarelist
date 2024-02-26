@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add a cell for the flare_id with an onclick event
             row += '<td><a href="#" class="flare-id-link" data-flare-id="' + item['flare_id'] + '">' + item['flare_id'] + '</a></td>';
 
-            ['start', 'end', 'GOES_class', 'link_dspec', 'link_dspec_data', 'link_movie', 'link_fits'].forEach((key) => {
+            ['start', 'peak', 'end', 'GOES_class', 'link_dspec', 'link_dspec_data', 'link_movie', 'link_fits'].forEach((key) => {
                 row += '<td>' + (item[key] || '') + '</td>'; // Handle null values
             });
 
