@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from flask import Flask, Blueprint, render_template, request, jsonify
+from flask import Flask, Blueprint, render_template, request, jsonify, url_for
 import plotly.express as px
 import plotly.graph_objects as go
 import socket
@@ -20,6 +20,7 @@ def check_url_exists(url):
 
 
 example = Blueprint('example', __name__, template_folder='templates')
+
 
 def get_eo_flare_list_MySQL(start_utc, end_utc):
     """
@@ -74,12 +75,12 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
     keys = ['_id', 'start', 'end', 'link']
     keys = ['_id', 'flare_id', 'start', 'peak', 'end', 'GOES_class', 'link_dspec_data', 'link_movie', 'link_fits']
     # keys=['_id','flare_id','start','end','GOES_class','link_dspec','link_dspec_data','link_movie','link_fits']
+    ql_symbol_url = url_for('static', filename='images/ql.svg')
+    dl_symbol_url = url_for('static', filename='images/dl.svg')
+
     if ind.size > 0:
         for i, j in enumerate(ind):
             flare_id_str = str(flare_id[j][0])
-
-            ql_symbol_url = "/static/images/ql.svg"
-            dl_symbol_url = "/static/images/dl.svg"
 
             link_dspec_str = f'http://www.ovsa.njit.edu/wiki/index.php/File:' + depec_file[j] + '.png'
             link_dspec_data_str = f'http://ovsa.njit.edu/events/{flare_id_str[0:4]}/'+depec_file[j]+'.dat'
@@ -98,16 +99,16 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
                 link_fits = '<a href="'+link_fits_str+'"><img src="'+dl_symbol_url+'" alt="FITS" style="width:20px;height:20px;"></a>'
 
             result.append({'_id': i+1,
-                'flare_id': int(flare_id[j][0]),
-                'start': Time(EO_tstart[j],format='jd').isot[0].split('.')[0],
-                'peak': Time(EO_tpeak[j],format='jd').isot[0].split('.')[0],
-                'end': Time(EO_tend[j],format='jd').isot[0].split('.')[0],
-                'GOES_class': GOES_class[j][0],
-                'link_dspec': '<a href="'+link_dspec_str+'"><img src="'+ql_symbol_url+'" alt="DSpec" style="width:20px;height:20px;"></a>',
-                'link_dspec_data': '<a href="'+link_dspec_data_str+'"><img src="'+dl_symbol_url+'" alt="DSpec_Data" style="width:20px;height:20px;"></a>',
-                'link_movie': link_movie,
-                'link_fits': link_fits
-                })
+                           'flare_id': int(flare_id[j][0]),
+                           'start': Time(EO_tstart[j],format='jd').isot[0].split('.')[0],
+                           'peak': Time(EO_tpeak[j],format='jd').isot[0].split('.')[0],
+                           'end': Time(EO_tend[j],format='jd').isot[0].split('.')[0],
+                           'GOES_class': GOES_class[j][0],
+                           'link_dspec': '<a href="'+link_dspec_str+'"><img src="'+ql_symbol_url+'" alt="DSpec" style="width:20px;height:20px;"></a>',
+                           'link_dspec_data': '<a href="'+link_dspec_data_str+'"><img src="'+dl_symbol_url+'" alt="DSpec_Data" style="width:20px;height:20px;"></a>',
+                           'link_movie': link_movie,
+                           'link_fits': link_fits
+                           })
     return result
 
 
