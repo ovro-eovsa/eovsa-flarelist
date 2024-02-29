@@ -1,12 +1,29 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize flatpickr for datetime pickers
-    flatpickr(document.querySelectorAll('.datetime-picker'), {
+    const endDate = new Date();
+    const startDate = new Date();
+    // startDate.setMonth(startDate.getMonth() - 1);
+    startDate.setDate(startDate.getDate() - 14);
+
+    // Initialize the start datetime picker
+    flatpickr(document.getElementById('start'), {
         enableTime: true,
         dateFormat: "Y-m-d\\TH:i:S",
         defaultHour: 0,
         altFormat: "Y-m-d\\TH:i:S",
         allowInput: true,
         time_24hr: true,
+        defaultDate: startDate, // Set the default start date
+    });
+
+    // Initialize the end datetime picker
+    flatpickr(document.getElementById('end'), {
+        enableTime: true,
+        dateFormat: "Y-m-d\\TH:i:S",
+        defaultHour: 0,
+        altFormat: "Y-m-d\\TH:i:S",
+        allowInput: true,
+        time_24hr: true,
+        defaultDate: endDate, // Set the default end date
     });
 
     var baseUrl = isOvsa ? '/flarelist' : '';
@@ -119,18 +136,41 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
 
-    // Automatically fetch data for the last month on page load
-    (function autoFetchDataForLastMonth() {
-        const endDate = new Date();
-        const startDate = new Date();
-        startDate.setMonth(startDate.getMonth() - 1);
+    // // Automatically fetch data for the last month on page load
+    // (function autoFetchDataForLastMonth() {
+    //     const endDate = new Date();
+    //     const startDate = new Date();
+    //     startDate.setMonth(startDate.getMonth() - 1);
+    //
+    //     // Format dates to YYYY-MM-DD format
+    //     const start = startDate.toISOString().split('T')[0];
+    //     const end = endDate.toISOString().split('T')[0];
+    //
+    //     // Fetch data without needing to click the query button
+    //     fetchData(start, end);
+    // })();
 
-        // Format dates to YYYY-MM-DD format
-        const start = startDate.toISOString().split('T')[0];
-        const end = endDate.toISOString().split('T')[0];
+    // Automatically fetch data based on the selected dates in the datetime pickers on page load
+    (function autoFetchData() {
+        // Retrieve the flatpickr instances
+        const startPicker = document.querySelector("#start")._flatpickr;
+        const endPicker = document.querySelector("#end")._flatpickr;
 
-        // Fetch data without needing to click the query button
-        fetchData(start, end);
+        // Get the selected dates from the datetime pickers
+        // Ensure to check if the picker has selected dates to avoid errors
+        const start = startPicker.selectedDates[0] ? startPicker.selectedDates[0].toISOString().split('T')[0] : null;
+        const end = endPicker.selectedDates[0] ? endPicker.selectedDates[0].toISOString().split('T')[0] : null;
+
+        // Check if both start and end dates are selected
+        if (start && end) {
+            // Fetch data using the start and end dates
+            fetchData(start, end);
+        } else {
+            console.error("Start or end date is missing.");
+        }
     })();
+
+
+
 });
 
