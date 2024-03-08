@@ -5,8 +5,8 @@ vendor/
 # Compiled source
 dist/
 tmp/
-/build/
-/out/
+build/
+out/
 
 # Environment configuration files
 .env
