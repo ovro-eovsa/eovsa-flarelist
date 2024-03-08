@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-
     function fetchAndDisplayFlareData(flareId) {
         $.ajax({
             url: baseUrl + `/fetch-spectral-data/${flareId}`,
@@ -134,21 +133,6 @@ document.addEventListener('DOMContentLoaded', function() {
         let end = $('#end').val();
         fetchData(start, end);
     });
-
-
-    // // Automatically fetch data for the last month on page load
-    // (function autoFetchDataForLastMonth() {
-    //     const endDate = new Date();
-    //     const startDate = new Date();
-    //     startDate.setMonth(startDate.getMonth() - 1);
-    //
-    //     // Format dates to YYYY-MM-DD format
-    //     const start = startDate.toISOString().split('T')[0];
-    //     const end = endDate.toISOString().split('T')[0];
-    //
-    //     // Fetch data without needing to click the query button
-    //     fetchData(start, end);
-    // })();
 
     // Automatically fetch data based on the selected dates in the datetime pickers on page load
     (function autoFetchData() {
