@@ -96,13 +96,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // Use the config object here to include the custom button
                 Plotly.newPlot('plot-container', plotData.data, plotData.layout, config);
+
+                // Scroll to the plot container after the plot has been created
+                document.getElementById('plot-container').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             },
             error: function(xhr, status, error) {
                 console.error("Failed to fetch data for Flare ID:", flareId, status, error);
             }
         });
     }
-
 
     // Function to fetch data based on given start and end dates
     function fetchData(start, end) {
