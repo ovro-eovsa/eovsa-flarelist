@@ -59,9 +59,12 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
     depec_file1 = cursor.fetchall()
     depec_file = [item[0] for item in depec_file1]
 
+    cursor.execute("SELECT depec_img FROM EOVSA_flare_list_wiki_tb")
+    depec_img1 = cursor.fetchall()
+    depec_img = [item[0] for item in depec_img1]
+
     cursor.execute("SELECT EO_xcen FROM EOVSA_flare_list_wiki_tb")
     EO_xcen = cursor.fetchall()
-
 
     cursor.close()
     connection.close()
@@ -82,11 +85,10 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
         for i, j in enumerate(ind):
             flare_id_str = str(flare_id[j][0])
 
-            link_dspec_str = f'http://www.ovsa.njit.edu/wiki/index.php/File:' + depec_file[j] + '.png'
-            link_dspec_data_str = f'http://ovsa.njit.edu/events/{flare_id_str[0:4]}/'+depec_file[j]+'.dat'
+            link_dspec_str = f'http://www.ovsa.njit.edu/wiki/index.php/File:' + depec_img[j]
+            link_dspec_data_str = f'http://ovsa.njit.edu/events/{flare_id_str[0:4]}/'+depec_file[j]
             link_movie_str = f'http://ovsa.njit.edu/SynopticImg/eovsamedia/eovsa-browser/{flare_id_str[0:4]}/{flare_id_str[4:6]}/{flare_id_str[6:8]}/eovsa.lev1_mbd_12s.flare_id_{flare_id_str}.mp4'
             link_fits_str = f'http://ovsa.njit.edu/fits/flares/{flare_id_str[0:4]}/{flare_id_str[4:6]}/{flare_id_str[6:8]}/{flare_id_str}/'
-
 
             link_movie = None  # Default to None
             link_fits = None
@@ -95,8 +97,8 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
             #     link_fits = '<a href="'+link_fits_str+'"><img src="'+dl_symbol_url+'" alt="FITS" style="width:20px;height:20px;"></a>'
 
             if check_url_exists(link_movie_str):
-                link_movie = f'<a href="{link_movie_str}"><img src="{ql_symbol_url}" alt="QL_Movie" style="width:20px;height:20px;"></a>'
-                link_fits = '<a href="'+link_fits_str+'"><img src="'+dl_symbol_url+'" alt="FITS" style="width:20px;height:20px;"></a>'
+                link_movie = f'<div style="text-align: center;"><a href="{link_movie_str}"><img src="{ql_symbol_url}" alt="QL_Movie" style="width:20px;height:20px;"></a></div>'
+                link_fits = f'<div style="text-align: center;"><a href="{link_fits_str}"><img src="{dl_symbol_url}" alt="FITS" style="width:20px;height:20px;"></a></div>'
 
             result.append({'_id': i+1,
                            'flare_id': int(flare_id[j][0]),
@@ -104,13 +106,12 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
                            'peak': Time(EO_tpeak[j],format='jd').isot[0].split('.')[0],
                            'end': Time(EO_tend[j],format='jd').isot[0].split('.')[0],
                            'GOES_class': GOES_class[j][0],
-                           'link_dspec': '<a href="'+link_dspec_str+'"><img src="'+ql_symbol_url+'" alt="DSpec" style="width:20px;height:20px;"></a>',
-                           'link_dspec_data': '<a href="'+link_dspec_data_str+'"><img src="'+dl_symbol_url+'" alt="DSpec_Data" style="width:20px;height:20px;"></a>',
+                           'link_dspec': '<div style="text-align: center;"><a href="' + link_dspec_str + '"><img src="' + ql_symbol_url + '" alt="DSpec" style="width:20px;height:20px;"></a></div>',
+                           'link_dspec_data': '<div style="text-align: center;"><a href="' + link_dspec_data_str + '"><img src="' + dl_symbol_url + '" alt="DSpec_Data" style="width:20px;height:20px;"></a></div>',
                            'link_movie': link_movie,
                            'link_fits': link_fits
                            })
     return result
-
 
 
 
