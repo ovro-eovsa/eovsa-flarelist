@@ -209,7 +209,7 @@ def fetch_spectral_data(flare_id):
         title=f'Flux Data for Flare ID: {flare_id}',
         xaxis_title="Time [UT]",
         yaxis_title="Flux [sfu]",
-        xaxis_tickformat='%H:%M',
+        xaxis_tickformat='%H:%M:%S',
         template="plotly"  # or choose another template that fits your web design
     )
 
