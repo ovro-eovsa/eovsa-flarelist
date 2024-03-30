@@ -24,7 +24,7 @@ static/.webassets-cache/
 .webassets-cache
 
 # Documentation not for upload
-doc-dont-upload/
+doc-dont-upload/**
 
 # Python - Django specific
 *.log
