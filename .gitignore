@@ -16,7 +16,7 @@ out/
 .env.production.local
 
 # IDE and development environment
-.idea/
+.idea/*
 
 # Web assets and cache
 static/gen/

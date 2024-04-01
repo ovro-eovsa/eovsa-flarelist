@@ -9,8 +9,9 @@ import plotly
 import os
 import mysql.connector
 from astropy.time import Time
-
 import requests
+
+
 def check_url_exists(url):
     try:
         response = requests.head(url, allow_redirects=True, timeout=5)
@@ -85,10 +86,10 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
         for i, j in enumerate(ind):
             flare_id_str = str(flare_id[j][0])
 
-            link_dspec_str = f'http://www.ovsa.njit.edu/wiki/index.php/File:' + depec_img[j]
-            link_dspec_data_str = f'http://ovsa.njit.edu/events/{flare_id_str[0:4]}/'+depec_file[j]
-            link_movie_str = f'http://ovsa.njit.edu/SynopticImg/eovsamedia/eovsa-browser/{flare_id_str[0:4]}/{flare_id_str[4:6]}/{flare_id_str[6:8]}/eovsa.lev1_mbd_12s.flare_id_{flare_id_str}.mp4'
-            link_fits_str = f'http://ovsa.njit.edu/fits/flares/{flare_id_str[0:4]}/{flare_id_str[4:6]}/{flare_id_str[6:8]}/{flare_id_str}/'
+            link_dspec_str = f'https://www.ovsa.njit.edu/wiki/index.php/File:' + depec_img[j]
+            link_dspec_data_str = f'https://ovsa.njit.edu/events/{flare_id_str[0:4]}/' + depec_file[j]
+            link_movie_str = f'https://www.ovsa.njit.edu/SynopticImg/eovsamedia/eovsa-browser/{flare_id_str[0:4]}/{flare_id_str[4:6]}/{flare_id_str[6:8]}/eovsa.lev1_mbd_12s.flare_id_{flare_id_str}.mp4'
+            link_fits_str = f'https://www.ovsa.njit.edu/fits/flares/{flare_id_str[0:4]}/{flare_id_str[4:6]}/{flare_id_str[6:8]}/{flare_id_str}/'
 
             link_movie = None  # Default to None
             link_fits = None
@@ -100,11 +101,11 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
                 link_movie = f'<div style="text-align: center;"><a href="{link_movie_str}"><img src="{ql_symbol_url}" alt="QL_Movie" style="width:20px;height:20px;"></a></div>'
                 link_fits = f'<div style="text-align: center;"><a href="{link_fits_str}"><img src="{dl_symbol_url}" alt="FITS" style="width:20px;height:20px;"></a></div>'
 
-            result.append({'_id': i+1,
+            result.append({'_id': i + 1,
                            'flare_id': int(flare_id[j][0]),
-                           'start': Time(EO_tstart[j],format='jd').isot[0].split('.')[0],
-                           'peak': Time(EO_tpeak[j],format='jd').isot[0].split('.')[0],
-                           'end': Time(EO_tend[j],format='jd').isot[0].split('.')[0],
+                           'start': Time(EO_tstart[j], format='jd').isot[0].split('.')[0],
+                           'peak': Time(EO_tpeak[j], format='jd').isot[0].split('.')[0],
+                           'end': Time(EO_tend[j], format='jd').isot[0].split('.')[0],
                            'GOES_class': GOES_class[j][0],
                            'link_dspec': '<div style="text-align: center;"><a href="' + link_dspec_str + '"><img src="' + ql_symbol_url + '" alt="DSpec" style="width:20px;height:20px;"></a></div>',
                            'link_dspec_data': '<div style="text-align: center;"><a href="' + link_dspec_data_str + '"><img src="' + dl_symbol_url + '" alt="DSpec_Data" style="width:20px;height:20px;"></a></div>',
@@ -112,7 +113,6 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
                            'link_fits': link_fits
                            })
     return result
-
 
 
 @example.route("/api/flare/query", methods=['POST'])
@@ -131,7 +131,6 @@ def get_flare_list_from_database():
         print(f"Error: {e}")
         # Return a JSON response with the error message
         return jsonify({"error": str(e)}), 500
-
 
 
 @example.route('/fetch-spectral-data/<flare_id>', methods=['GET'])
