@@ -16,7 +16,7 @@ out/
 .env.production.local
 
 # IDE and development environment
-.idea/
+.idea/*
 
 # Web assets and cache
 static/gen/
@@ -24,7 +24,7 @@ static/.webassets-cache/
 .webassets-cache
 
 # Documentation not for upload
-doc-dont-upload/
+doc-dont-upload/**
 
 # Python - Django specific
 *.log
