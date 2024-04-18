@@ -75,6 +75,9 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
 
     ind = np.where((EO_tstart <= t_ed) & (t_st <= EO_tend))[0]
 
+    ind_sorted = ind[np.argsort(EO_tstart[ind].flatten())]
+    ind = ind_sorted
+
     result = []
     keys = ['_id', 'start', 'end', 'link']
     keys = ['_id', 'flare_id', 'start', 'peak', 'end', 'GOES_class', 'link_dspec_data', 'link_movie', 'link_fits']
