@@ -41,6 +41,7 @@ var isOvsa = {{ 'true' if hostname == 'ovsa' else 'false' }};
   <button type="submit" id="query-btn" class="btn btn-primary mb-2">Query</button>
 </form>
 <div class="p-2 ml-5 mt-2">
+    <p>*If an event is not listed or if you are interested in collaboration on more advanced analysis, please submit a request using <a href="https://forms.gle/9egBzThduVcr7APe9">this data request form</a>.</p>
     <h3>EOVSA flare list</h3>
     <table class="table table-hover table-striped table-bordered table-sm table-responsive-sm col-6" 
            id="flare-list" style="display:none;">
@@ -52,6 +53,10 @@ var isOvsa = {{ 'true' if hostname == 'ovsa' else 'false' }};
                    <th title="Peak UTC">Peak UTC</th>
                    <th title="End UTC">End UTC</th>
                    <th>GOES Class</th>
+                   <th>Fpk_sfu 3GHz</th>
+                   <th>Fpk_sfu 7GHz</th>
+                   <th>Fpk_sfu 11GHz</th>
+                   <th>Fpk_sfu 15GHz</th>
                    <th>Spectrogram Plot</th>
                    <th>Spectrogram Data</th>
                    <th>Quicklook Movie</th>
