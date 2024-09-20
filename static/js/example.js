@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add a cell for the flare_id with an onclick event
             row += '<td><a href="#" class="flare-id-link" data-flare-id="' + item['flare_id'] + '">' + item['flare_id'] + '</a></td>';
 
-            ['start', 'peak', 'end', 'GOES_class', 'link_dspec', 'link_dspec_data', 'link_movie', 'link_fits'].forEach((key) => {
+            ['start', 'peak', 'end', 'GOES_class', 'flux_pk_3GHz', 'flux_pk_7GHz', 'flux_pk_11GHz', 'flux_pk_15GHz', 'link_dspec', 'link_dspec_data', 'link_movie', 'link_fits'].forEach((key) => {
                 row += '<td>' + (item[key] || '') + '</td>'; // Handle null values
             });
 

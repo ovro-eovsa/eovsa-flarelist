@@ -64,8 +64,20 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
     depec_img1 = cursor.fetchall()
     depec_img = [item[0] for item in depec_img1]
 
-    cursor.execute("SELECT EO_xcen FROM EOVSA_flare_list_wiki_tb")
-    EO_xcen = cursor.fetchall()
+    # cursor.execute("SELECT EO_xcen FROM EOVSA_flare_list_wiki_tb")
+    # EO_xcen = cursor.fetchall()
+
+    cursor.execute("SELECT flux_pk_3GHz FROM EOVSA_flare_list_wiki_tb")
+    flux_pk_3GHz = cursor.fetchall()
+
+    cursor.execute("SELECT flux_pk_7GHz FROM EOVSA_flare_list_wiki_tb")
+    flux_pk_7GHz = cursor.fetchall()
+
+    cursor.execute("SELECT flux_pk_11GHz FROM EOVSA_flare_list_wiki_tb")
+    flux_pk_11GHz = cursor.fetchall()
+
+    cursor.execute("SELECT flux_pk_15GHz FROM EOVSA_flare_list_wiki_tb")
+    flux_pk_15GHz = cursor.fetchall()
 
     cursor.close()
     connection.close()
@@ -110,6 +122,10 @@ def get_eo_flare_list_MySQL(start_utc, end_utc):
                            'peak': Time(EO_tpeak[j], format='jd').isot[0].split('.')[0],
                            'end': Time(EO_tend[j], format='jd').isot[0].split('.')[0],
                            'GOES_class': GOES_class[j][0],
+                           'flux_pk_3GHz': f'<div style="text-align: center;">{flux_pk_3GHz[j][0]}</div>',
+                           'flux_pk_7GHz': f'<div style="text-align: center;">{flux_pk_7GHz[j][0]}</div>',
+                           'flux_pk_11GHz': f'<div style="text-align: center;">{flux_pk_11GHz[j][0]}</div>',
+                           'flux_pk_15GHz': f'<div style="text-align: center;">{flux_pk_15GHz[j][0]}</div>',
                            'link_dspec': '<div style="text-align: center;"><a href="' + link_dspec_str + '"><img src="' + ql_symbol_url + '" alt="DSpec" style="width:20px;height:20px;"></a></div>',
                            'link_dspec_data': '<div style="text-align: center;"><a href="' + link_dspec_data_str + '"><img src="' + dl_symbol_url + '" alt="DSpec_Data" style="width:20px;height:20px;"></a></div>',
                            'link_movie': link_movie,
