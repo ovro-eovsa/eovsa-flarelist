@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (toggleButton) {
             // Create an <img> element for the custom icon
             const img = document.createElement('img');
-            img.src = '/static/images/x.svg'; // Path to your SVG icon file
+            img.src = baseUrl + '/static/images/x.svg'; // Path to your SVG icon file
             img.style.width = '20px';
             img.style.height = '20px';
             img.alt = 'Toggle spec_XP';
