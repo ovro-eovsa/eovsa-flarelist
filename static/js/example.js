@@ -64,11 +64,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function fetchAndDisplayFlareData(flareId) {
         $.ajax({
-            url: baseUrl + `/fetch-spectral-data-tp/${flareId}`,
+            url: baseUrl + `/fetch-spectral-data-xp/${flareId}`,
             method: 'GET',
             success: function(response) {
                 var plotData = JSON.parse(response.plot_data_ID);
-                var isSpecXP = false;
+                var isSpecTP = false;
 
                 var config = {
                     modeBarButtonsToAdd: [
@@ -85,10 +85,10 @@ document.addEventListener('DOMContentLoaded', function() {
                             name: 'Toggle spec_XP/TP',
                             icon: Plotly.Icons.pencil, // Placeholder icon initially
                             click: function () {
-                                isSpecXP = !isSpecXP;
-                                if (isSpecXP) {
-                                    console.log("Fetching spec_XP data...");
-                                    fetchAndDisplaySpecXP(flareId);
+                                isSpecTP = !isSpecTP;
+                                if (isSpecTP) {
+                                    console.log("Fetching spec_TP data...");
+                                    fetchAndDisplaySpecTP(flareId);
                                 } else {
                                     console.log("Returning to original plot data...");
                                     Plotly.newPlot('plot-container', plotData.data, plotData.layout, config).then(function () {
@@ -137,16 +137,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function fetchAndDisplaySpecXP(flareId) {
+    function fetchAndDisplaySpecTP(flareId) {
         $.ajax({
-            url: baseUrl + `/fetch-spectral-data-xp/${flareId}`,
+            url: baseUrl + `/fetch-spectral-data-tp/${flareId}`,
             method: 'GET',
             success: function(response) {
                 var plotData = JSON.parse(response.plot_data_ID);
                 Plotly.react('plot-container', plotData.data, plotData.layout);
             },
             error: function(xhr, status, error) {
-                console.error("Failed to fetch spec_XP data for Flare ID:", flareId, status, error);
+                console.error("Failed to fetch spec_TP data for Flare ID:", flareId, status, error);
             }
         });
     }
